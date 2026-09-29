@@ -1,0 +1,33 @@
+1. Por que é necessário definir um domain e um type em socket()? Existem vários tipos de conexão? Qual é o propósito deles?
+O domain define a família de endereços utilizada na comunicação.
+Exemplos:
+    AF_INET  → IPv4
+    AF_INET6 → IPv6
+O type define o modelo de comunicação.
+Exemplos:
+    SOCK_STREAM → fluxo de dados orientado a conexão, normalmente usado com TCP.
+    SOCK_DGRAM  → comunicação por datagramas, normalmente usada com UDP.
+Eles existem porque diferentes aplicações possuem necessidades diferentes de comunicação.
+Exemplo:
+    TCP → quando confiabilidade e ordenação são importantes.
+    UDP → quando simplicidade/baixa sobrecarga e rapidez são mais importantes.
+
+
+
+2. Por que existe mais de um protocolo?
+Porque diferentes problemas de comunicação precisam de comportamentos diferentes.
+Protocolos são conjuntos de regras/acordos que definem como os dispositivos ou programas devem se comunicar.
+Exemplos:
+    TCP  → transporte orientado a conexão e confiável.
+    UDP  → transporte baseado em datagramas.
+    HTTP → comunicação usada por aplicações Web.
+    DNS  → resolução de nomes.
+Protocolos também podem trabalhar em conjunto, formando camadas.
+Exemplo:
+    HTTP
+      ↓
+    TCP
+      ↓
+    IP
+      ↓
+    Ethernet/Wi-Fi

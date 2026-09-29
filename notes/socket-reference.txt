@@ -1,0 +1,28 @@
+Socket(domain, type, protocol)
+
+    Domain:
+        define a familia de endereços.
+        AF_INET = IPv4.
+
+    Type:
+        define o tipo de comunicação.
+        SOCK_STREAM = tipo de socket orientado a fluxo e normalmente usado com TCP
+        SOCK_DGRAM  = comunicação baseada em datagramas.
+
+    Protocol:
+        Define o protocolo específico.
+        0 = escolher automaticamente o protocolo apropriado
+            para a combinação de domain + type.
+
+    Exemplo TCP:
+
+        socket(AF_INET, SOCK_STREAM, 0)
+
+        AF_INET     → IPv4
+        SOCK_STREAM → comunicação orientada a conexão/fluxo de dados
+        0           → protocolo apropriado será escolhido
+                    (TCP neste caso)
+
+    IMPORTANTE:
+        0 não significa "TCP".
+        0 significa "escolha o protocolo apropriado".

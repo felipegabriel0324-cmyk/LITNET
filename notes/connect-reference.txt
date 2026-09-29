@@ -1,0 +1,10 @@
+connect(socket, endereço, tamanho_do_endereço)
+
+    Socket:
+        um socket
+        EX:socket(AF_INET, SOCK_STREAM, 0)
+            ou
+        int socket_fd = socket(AF_INET, SOCK_STREAM, 0)
+        connect(socket_fd...
+
+    Endereço:
