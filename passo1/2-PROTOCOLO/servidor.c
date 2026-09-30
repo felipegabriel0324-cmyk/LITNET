@@ -5,7 +5,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 int main() {
-	int socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+	int socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
 	if(socket_fd == 0) {
 		perror("SOCKET ERR");
 		return 1;
@@ -13,7 +13,7 @@ int main() {
 	struct sockaddr_in servidor;
 	servidor.sin_family = AF_INET;
 	servidor.sin_port = htons(9999);
-	int in_pt = inet_pton(AF_INET, "10.35.220.18", &servidor.sin_addr);
+	int in_pt = inet_pton(AF_INET, "127.0.0.1", &servidor.sin_addr);
 	if(in_pt == 0) {
 		perror("INET_PTON ERR");
 		return 1;

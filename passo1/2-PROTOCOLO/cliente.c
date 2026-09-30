@@ -13,7 +13,7 @@ int main() {
 	struct sockaddr_in destino;
 	destino.sin_family = AF_INET;
 	destino.sin_port = htons(9999);
-	int in_pt = inet_pton(AF_INET, "10.35.220.18", &destino.sin_addr);
+	int in_pt = inet_pton(AF_INET, "127.0.0.1", &destino.sin_addr);
 	if(in_pt == 0) {
 		perror("INET_PTON ERR");
 		return 1;
