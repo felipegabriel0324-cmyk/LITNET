@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <errno.h>
+#include <unistd.h>
 int main() {
 	int socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
 	if(socket_fd == -1) {
@@ -29,7 +30,9 @@ int main() {
 	char msg[100];
 	do {
 		printf("Digite a mensagem a ser enviada, digite nada e o programa encerrara\n");
-		fgets(msg, 99, stdin);
+		if(fgets(msg, 99, stdin) == NULL) {
+			return 1;
+		}
 		msg[strcspn(msg, "\n")] = '\0';
 		int sd = send(socket_fd, msg, strlen(msg), 0);
 		if(sd == -1) {
@@ -37,5 +40,6 @@ int main() {
 			return 1;
 		}
 	}while(msg[0]);
+	close(socket_fd);
 	return 0;
 }

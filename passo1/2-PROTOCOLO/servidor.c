@@ -6,7 +6,7 @@
 #include <arpa/inet.h>
 int main() {
 	int socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
-	if(socket_fd == 0) {
+	if(socket_fd == -1) {
 		perror("SOCKET ERR");
 		return 1;
 	}
@@ -26,33 +26,27 @@ int main() {
 		perror("BIND ERR");
 		return 1;
 	}
-	int lis = listen(socket_fd, 1);
-	if(lis == -1) {
-		perror("LISTEN ERR");
-		return 1;
-	}
 	struct sockaddr_in cliente;
-	socklen_t cliente_len = sizeof(cliente);
-	int cliente_fd = accept(socket_fd, (struct sockaddr*)&cliente, &cliente_len);
-	if(cliente_fd == -1) {
-		perror("ACCEPT ERR");
-		return 1;
-	}
 	char msg[100];
+	char cliente_addr[16];
 	do {
-		int rv = recv(socket_fd, msg, 100, 0);
-		if(rv == -1) {
+		socklen_t cliente_len = sizeof(cliente);
+		int rvf = recvfrom(socket_fd, msg, sizeof(msg) -1, 0, (struct sockaddr*)&cliente, &cliente_len);
+		if(rvf == -1) {
 			perror("RECV ERR");
 			return 1;
-		}else if(rv == 0) {
-			printf("Conexão encerrada\n");
-			return 0;
+		}else if(rvf == 0) {
+			printf("o cliente se desconectou\n");
 		}
-		if(rv == 100) {
-			msg[rv -1] = '\0';
-		}else{
-			msg[rv] - '\0';
-		}
+		msg[rvf] = '\0';
 		printf("%s\n", msg);
+		int prt = ntohs(cliente.sin_port);
+		int in_np = inet_ntop(AF_INET, &cliente.sin_addr, cliente_addr, sizeof(cliente_addr));
+		if(in_np == NULL) {
+			perror("INET_NTOP ERR");
+			return 1;
+		}
+		printf("porta:%i\n", prt);
+		printf("endereço:%s\n", cliente_addr);
 	}while(1);
 }
